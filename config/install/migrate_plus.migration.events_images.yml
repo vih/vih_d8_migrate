@@ -3,14 +3,14 @@
 # Detailed explanations for various elements of a migration
 # YAML have been provided in migrate_plus.migration.program_data.yml
 
-id: subjects_images
+id: events_images
 label: Images
 migration_group: {}
 migration_tags: {}
 # Source.
 source:
   plugin: csv
-  path: modules/custom/custom_migrate/imports/subjects.csv
+  path: modules/custom/custom_migrate/imports/lectures.csv
   header_row_count: 1
   # Unique ID.
   #
@@ -25,15 +25,13 @@ source:
     1:
       path: Path
     2:
-      name: Name
+      title: Title
     3:
-      teaser: Teaser
+      date: Date for event
     4:
-      body: Body
-    5:
       picture: Picture
-    6:
-      pictures: Pictures
+    5:
+      body: Body
   # Source field definitions.
   #fields:
   #  picture: Name of the image file associated.
@@ -47,7 +45,7 @@ source:
   # and file names for program images.
   constants:
     file_source_uri: 'public://import/'
-    file_dest_uri: 'public://subjects/image/'
+    file_dest_uri: 'public://events/image/'
 # Destination.
 destination:
   # We will be creating entities of type "file" this time.
@@ -83,7 +81,10 @@ process:
   # column, we can do it here.
   filename: picture
   uri:
-    plugin: file_copy
-    source:
-      - '@file_source'
-      - '@file_dest'
+    -
+      plugin: skip_on_empty
+    -
+      plugin: file_copy
+      source:
+        - '@file_source'
+        - '@file_dest'

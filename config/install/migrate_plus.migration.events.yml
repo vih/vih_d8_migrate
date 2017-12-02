@@ -1,0 +1,62 @@
+id: events
+label: Events CSV
+migration_group: event
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - events_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/lectures.csv
+  header_row_count: 1
+  keys:
+    - nid
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      title: Title
+    3:
+      date: Date for event
+    4:
+      picture: Picture
+    5:
+      body: Body
+
+process:
+  type:
+    plugin: default_value
+    default_value: event
+  title: title
+  body: body
+  # Todo fix date formatting
+  #field_event_end_date:
+  #  plugin: callback
+  #  source: date
+  #  callable: strtotime
+  #  created: date
+  'field_banner/target_id':
+      -
+        plugin: skip_on_empty
+        source: picture
+      -
+        plugin: migration
+        migration: events_images
+        source: picture
+  'field_image/target_id':
+     -
+       plugin: skip_on_empty
+       source: picture
+     -
+       plugin: migration
+       migration: events_images
+       source: picture
+  'field_image/alt': name
+destination:
+  plugin: entity:node
+  default_bundle: event

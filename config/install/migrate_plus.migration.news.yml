@@ -1,0 +1,58 @@
+id: news
+label: News CSV
+migration_group: news
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+#migration_dependencies:
+#  required:
+#    - news_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/news.csv
+  header_row_count: 1
+  keys:
+    - nid
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      title: Title
+    3:
+      date: Date created
+    4:
+      pictures: Pictures
+    5:
+      body: Body
+    6:
+      tags: Tags
+
+process:
+  type:
+    plugin: default_value
+    default_value: news
+  title: title
+  body: body
+# TODO Handle Pictures in some way
+#  'field_banner/target_id':
+#    plugin: migration
+#    migration: news_images
+#    source: picture
+#  'field_image/target_id':
+#      plugin: migration
+#      migration: news_images
+#      source: picture
+#  'field_image/alt': title
+  field_news_tags:
+    plugin: entity_generate
+    source: tags
+    entity_type: taxonomy_term
+    bundle_key: vid
+    bundle: news_tags
+    value_key: name
+destination:
+  plugin: entity:node
+  default_bundle: news

@@ -1,0 +1,60 @@
+id: teachers
+label: Teachers CSV
+migration_group: teachers
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - teachers_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/teachers.csv
+  header_row_count: 1
+  keys:
+    - nid
+  column_names:
+    0:
+      nid: nid
+    1:
+      path: Path
+    2:
+      title: Title
+    3:
+      description: Description
+    4:
+      picture: Picture
+    5:
+      about: Qualifications
+    6:
+      profile_ids: Profile IDs
+    7:
+      email: E-mail
+
+process:
+  type:
+    plugin: default_value
+    default_value: teachers
+  name: title
+  mail: email
+  roles: roles
+  field_first_name: title
+  field_vih_user_descr: description
+  # TODO Reintroduce when about is a proper field type
+#  field_user_kvalifikationer: about
+  'field_banner/target_id':
+    plugin: migration
+    migration: teachers_images
+    source: picture
+  'field_banner/alt': title
+  'field_vih_user_photo/target_id':
+    plugin: migration
+    migration: teachers_images
+    source: picture
+  'field_vih_user_photo/alt': title
+destination:
+  plugin: 'entity:user'
+migration_dependencies:
+  required: {  }
+  optional: {  }
