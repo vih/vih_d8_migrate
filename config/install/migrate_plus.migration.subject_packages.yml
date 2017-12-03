@@ -5,11 +5,9 @@ dependencies:
   enforced:
     module:
       - custom_migrate
-#migration_dependencies:
-#  required:
-#    - subject_images
-#    - subject_class
-#    - breed_organization
+migration_dependencies:
+  required:
+    - subject_packages_images
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/subject_packages.csv
@@ -27,25 +25,21 @@ source:
       picture: Picture
 
 process:
-  type:
-    plugin: default_value
-    default_value: subject_packages
   name: name
+  field_heading: name
   description: description
   'field_banner/target_id':
     plugin: migration
-    migration: images
+    migration: subject_packages_images
     source: picture
   'field_vih_cp_image/target_id':
     plugin: migration
-    migration: images
+    migration: subject_packages_images
     source: picture
   # Now that we have the images in place, we also copy the alternate text
   # for the images to the "alt" property of "field_image". Having "alt"
   # would help improve accessibility and SEO.
   'field_vih_cp_image/alt': name
-  # TODO Make a paragraph out of the pictures field
-  #  field_vih_class_image: pictures
 destination:
   plugin: entity:taxonomy_term
   default_bundle: vih_class_package

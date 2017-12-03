@@ -1,16 +1,16 @@
-id: events
-label: Events CSV
-migration_group: events
+id: short_courses
+label: Short Courses CSV
+migration_group: short_courses
 dependencies:
   enforced:
     module:
       - custom_migrate
 migration_dependencies:
   required:
-    - events_images
+    - short_courses_images
 source:
   plugin: csv
-  path: modules/custom/custom_migrate/imports/lectures.csv
+  path: modules/custom/custom_migrate/imports/short_courses.csv
   header_row_count: 1
   keys:
     - nid
@@ -30,43 +30,42 @@ source:
     6:
       body: Body
     7:
-      speaker: Speaker
+      pictures: Pictures
 
 process:
   type:
     plugin: default_value
-    default_value: event
-  field_event_price:
-    plugin: default_value
-    default_value: 50
+    default_value: vih_short_course
   title: title
-  body: body
   field_vih_course_heading: title
-  field_vih_course_subheading: speaker
+  #field_vih_course_subheading: title
+  body: body
   # TODO Fix timezone
-  field_event_start_date/value:
+  'field_vih_sc_start_date/value':
     -
       plugin: format_date
       from_format: 'd/m/Y - H:i'
-      to_format: 'Y-m-d\TH:i:s'
+      to_format: 'Y-m-d'
       source: date
-  field_event_end_date/value:
+  # TODO Missing H:i on the course
+  'field_vih_sc_end_date/value':
     -
       plugin: format_date
       from_format: 'd/m/Y - H:i'
-      to_format: 'Y-m-d\TH:i:s'
+      to_format: 'Y-m-d'
       source: end_date
+  # TODO Missing H:i on the course
   'field_banner/target_id':
     -
       plugin: migration
-      migration: events_images
+      migration: short_courses_images
       source: picture
-  'field_image/target_id':
+  'field_vih_sc_image/target_id':
     -
       plugin: migration
-      migration: events_images
+      migration: short_courses_images
       source: picture
-  'field_image/alt': title
+  'field_vih_sc_image/alt': title
 destination:
   plugin: entity:node
-  default_bundle: event
+  default_bundle: vih_short_course

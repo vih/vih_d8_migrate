@@ -5,9 +5,9 @@ dependencies:
   enforced:
     module:
       - custom_migrate
-#migration_dependencies:
-#  required:
-#    - news_images
+migration_dependencies:
+  required:
+    - news_images
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/news.csv
@@ -22,37 +22,55 @@ source:
     2:
       title: Title
     3:
-      date: Date created
+      created: Date created
     4:
-      pictures: Pictures
+      picture: Picture
     5:
-      body: Body
+      pictures: Pictures
     6:
+      body: Body
+    7:
       tags: Tags
 
 process:
   type:
     plugin: default_value
     default_value: news
+  uid:
+    plugin: default_value
+    default_value: 1
   title: title
   body: body
-# TODO Handle Pictures in some way
-#  'field_banner/target_id':
-#    plugin: migration
-#    migration: news_images
-#    source: picture
-#  'field_image/target_id':
-#      plugin: migration
-#      migration: news_images
-#      source: picture
-#  'field_image/alt': title
-  field_news_tags:
-    plugin: entity_generate
-    source: tags
-    entity_type: taxonomy_term
-    bundle_key: vid
-    bundle: news_tags
-    value_key: name
+  created:
+    -
+      plugin: format_date
+      from_format: 'd/m/Y - H:i'
+      to_format: 'Y-m-d H:i:s'
+      source: created
+  'field_banner/target_id':
+    -
+      plugin: migration
+      migration: news_images
+      source: picture
+  'field_banner/alt': title
+  'field_image/target_id':
+    -
+      plugin: migration
+      migration: news_images
+      source: picture
+  'field_image/alt': title
+  # TODO Figure out how to do tags
+  #field_news_tags:
+  #  -
+  #    plugin: explode
+  #    delimiter: ', '
+  #    source: tags
+  #  -
+  #    plugin: entity_generate
+  #    entity_type: taxonomy_term
+  #    value_key: name
+  #    bundle: news_tags
+  #    ignore_case: true
 destination:
   plugin: entity:node
   default_bundle: news

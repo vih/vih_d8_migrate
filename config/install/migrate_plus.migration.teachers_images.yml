@@ -4,8 +4,8 @@
 # YAML have been provided in migrate_plus.migration.program_data.yml
 
 id: teachers_images
-label: Images
-migration_group: {}
+label: Teacher Images
+migration_group: teachers
 migration_tags: {}
 # Source.
 source:
@@ -29,13 +29,13 @@ source:
     3:
       description: Description
     4:
-      picture: Picture
-    5:
       about: Qualifications
-    6:
+    5:
       profile_ids: Profile IDs
-    7:
+    6:
       email: E-mail
+    7:
+      picture: Picture
   # Source field definitions.
   #fields:
   #  picture: Name of the image file associated.
@@ -83,9 +83,18 @@ process:
   #
   # Alternatively, if we wish to name them after some other
   # column, we can do it here.
-  filename: picture
+  filename:
+    -
+      plugin: get
+      source: picture
+    -
+      plugin: skip_on_empty
+      method: row
   uri:
     plugin: file_copy
     source:
       - '@file_source'
       - '@file_dest'
+  uid:
+    plugin: default_value
+    default_value: 1

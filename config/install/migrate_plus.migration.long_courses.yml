@@ -1,0 +1,67 @@
+id: long_courses
+label: Long Courses CSV
+migration_group: long_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - long_courses_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/long_courses.csv
+  header_row_count: 1
+  keys:
+    - nid
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      title: Title
+    3:
+      start: Date for event
+    4:
+      end: Date for event
+    5:
+      picture: Picture
+    6:
+      body: Body
+    7:
+      weekly: Weekly Price
+    8:
+      registration: Registration Price
+    9:
+      materials: Materials Price
+    10:
+      materials: Travels Price
+process:
+  type:
+    plugin: default_value
+    # TODO Bundle misspelled
+    default_value: vih_long_cource
+  title: title
+  field_vih_course_heading: title
+  #field_vih_course_subheading: title
+  body: body
+  # Strange name for the materials field
+  field_vih_course_price: materials
+  # TODO Missing travel price - should that just go with materials?
+  field_vih_course_subsc_price: registration
+  field_vih_course_week_price: weekly
+  'field_banner/target_id':
+    -
+      plugin: migration
+      migration: long_courses_images
+      source: picture
+  'field_vih_course_image/target_id':
+    -
+      plugin: migration
+      migration: long_courses_images
+      source: picture
+  'field_vih_course_image/alt': title
+destination:
+  plugin: entity:node
+  default_bundle: vih_long_cource

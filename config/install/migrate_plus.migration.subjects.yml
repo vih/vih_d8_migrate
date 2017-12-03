@@ -33,9 +33,6 @@ source:
     7:
       class_packages: Class packages
 process:
-  type:
-    plugin: default_value
-    default_value: subjects
   name: name
   description: body
   field_vih_class_class_packages:

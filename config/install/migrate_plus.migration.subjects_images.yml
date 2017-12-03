@@ -4,8 +4,8 @@
 # YAML have been provided in migrate_plus.migration.program_data.yml
 
 id: subjects_images
-label: Images
-migration_group: {}
+label: Subject Images
+migration_group: subjects
 migration_tags: {}
 # Source.
 source:
@@ -87,3 +87,6 @@ process:
     source:
       - '@file_source'
       - '@file_dest'
+  uid:
+    plugin: default_value
+    default_value: 1

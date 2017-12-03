@@ -4,8 +4,8 @@
 # YAML have been provided in migrate_plus.migration.program_data.yml
 
 id: events_images
-label: Images
-migration_group: {}
+label: Event Images
+migration_group: events
 migration_tags: {}
 # Source.
 source:
@@ -29,9 +29,13 @@ source:
     3:
       date: Date for event
     4:
-      picture: Picture
+      end_date: Date for event
     5:
+      picture: Picture
+    6:
       body: Body
+    7:
+      speaker: Speaker
   # Source field definitions.
   #fields:
   #  picture: Name of the image file associated.
@@ -82,9 +86,10 @@ process:
   filename: picture
   uri:
     -
-      plugin: skip_on_empty
-    -
       plugin: file_copy
       source:
         - '@file_source'
         - '@file_dest'
+  uid:
+    plugin: default_value
+    default_value: 1

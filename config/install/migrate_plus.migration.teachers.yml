@@ -8,6 +8,7 @@ dependencies:
 migration_dependencies:
   required:
     - teachers_images
+    - teachers_context
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/teachers.csv
@@ -24,23 +25,32 @@ source:
     3:
       description: Description
     4:
-      picture: Picture
-    5:
       about: Qualifications
-    6:
+    5:
       profile_ids: Profile IDs
-    7:
+    6:
       email: E-mail
-
+    7:
+      picture: Picture
+  teacher_class_description:
+    plugin: migration
+    migration: teacher_context_paragraph
+    source: profile_ids
 process:
   type:
     plugin: default_value
     default_value: teachers
   name: title
+  field_vih_user_title: title
   mail: email
+  field_e_mail: email
   roles: roles
-  field_first_name: title
+  field_user_name_first: title
   field_vih_user_descr: description
+  status:
+    -
+      plugin: default_value
+      default_value: 1
   # TODO Reintroduce when about is a proper field type
 #  field_user_kvalifikationer: about
   'field_banner/target_id':
@@ -53,8 +63,13 @@ process:
     migration: teachers_images
     source: picture
   'field_vih_user_photo/alt': title
+  field_paragraphs:
+    plugin: iterator
+    source:
+      - '@teacher_class_description'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 destination:
   plugin: 'entity:user'
-migration_dependencies:
-  required: {  }
-  optional: {  }
+
