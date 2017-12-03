@@ -8,7 +8,6 @@ dependencies:
 migration_dependencies:
   required:
     - teachers_images
-    - teachers_context
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/teachers.csv
@@ -32,10 +31,6 @@ source:
       email: E-mail
     7:
       picture: Picture
-  teacher_class_description:
-    plugin: migration
-    migration: teacher_context_paragraph
-    source: profile_ids
 process:
   type:
     plugin: default_value
@@ -63,13 +58,8 @@ process:
     migration: teachers_images
     source: picture
   'field_vih_user_photo/alt': title
-  field_paragraphs:
-    plugin: iterator
-    source:
-      - '@teacher_class_description'
-    process:
-      target_id: '0'
-      target_revision_id: '1'
 destination:
   plugin: 'entity:user'
-
+migration_dependencies:
+  required: {  }
+  optional: {  }
