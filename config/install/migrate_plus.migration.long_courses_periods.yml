@@ -34,34 +34,26 @@ process:
     default_value: vih_course_period
   title: title
   body: body
-  temp_slot:
+  field_vih_cp_course_slots/target_id:
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: long_courses_periods_slots
       source: course_slots
       no_stub: true
-  field_vih_cp_course_slots:
     -
-      plugin: iterator
-      source:
-        - '@temp_slot'
-      process:
-        target_id: '0'
-        target_revision_id: '1'
-    #-
-    #  plugin: explode
-    #  source: course_periods
-    #  delimiter: ", "
-    #-
-    #  plugin: migration
-    #  migration: long_courses_periods_slots
-    #  source: course_slots
-    #  no_stub: true
-    #-
-    #  plugin: iterator
-    #  process:
-    #    target_id: '0'
-    #    target_revision_id: '1'
+      plugin: extract
+      index:
+        - '0'
+  field_vih_cp_course_slots/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: long_courses_periods_slots
+      source: course_slots
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '1'
   #'field_vih_cp_start_date/value':
   #  -
   #    plugin: format_date
