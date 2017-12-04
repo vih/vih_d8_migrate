@@ -1,0 +1,31 @@
+id: short_courses_options
+label: Short Courses Periods Slots CSV
+migration_group: long_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  optional:
+    - subjects
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/short_courses_options.csv
+  header_row_count: 1
+  keys:
+    - option_id
+  column_names:
+    0:
+      option_id: Option id
+    1:
+      title: Title
+
+process:
+  field_vih_option_title: title
+  field_vih_option_price_addition:
+    -
+      plugin: default_value
+      default_value: 85
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: vih_option
