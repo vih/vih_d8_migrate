@@ -34,7 +34,6 @@ process:
     default_value: vih_course_period
   title: title
   body: body
-  # slots to migrate
   temp_slot:
     -
       plugin: migration

@@ -14,7 +14,7 @@ source:
   path: modules/custom/custom_migrate/imports/subjects.csv
   header_row_count: 1
   keys:
-    - nid
+    - name
   column_names:
     0:
       nid: Nid
@@ -35,11 +35,11 @@ source:
 process:
   name: name
   description: body
-  field_vih_class_class_packages:
-    -
-      plugin: explode
-      delimiter: ', '
-      source: class_packages
+  field_vih_class_class_packages/target_id:
+    #-
+    #  plugin: explode
+    #  delimiter: ', '
+    #  source: class_packages
     -
       plugin: migration
       migration: subject_packages

@@ -18,32 +18,29 @@ source:
     0:
       slot_id: Slot id
     1:
-      title: Title
+      period: Periode indikator
     2:
-      classes: Classes
+      title: Title
     3:
-      mandatory: Mandatory
+      classes: Classes
     4:
+      mandatory: Mandatory
+    5:
       travel: Travel
 process:
   field_vih_cs_title: title
   #field_vih_cs_travel: travel
   #field_vih_cs_mandatory: mandatory
-  field_vih_cs_classes/target_id:
-    #-
-    #  plugin: explode
-    #  source: course_periods
-    #  delimiter: ", "
+  field_vih_cs_classes:
+    -
+      plugin: explode
+      source: classes
+      delimiter: ", "
     -
       plugin: migration
       migration: subjects
-      source: classes
-      no_stub: true
-    #-
-    #  plugin: iterator
-    #  process:
-    #    target_id: '0'
-    #    target_revision_id: '1'
+      #source: classes
+      #no_stub: true
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: vih_course_slot
