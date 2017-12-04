@@ -5,9 +5,9 @@ dependencies:
   enforced:
     module:
       - custom_migrate
-#migration_dependencies:
-#  required:
-#    - subjects
+migration_dependencies:
+  optional:
+    - subjects
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/long_courses_periods_slots.csv
@@ -29,16 +29,16 @@ process:
   field_vih_cs_title: title
   #field_vih_cs_travel: travel
   #field_vih_cs_mandatory: mandatory
-  #field_vih_cs_classes:
+  field_vih_cs_classes/target_id:
     #-
     #  plugin: explode
     #  source: course_periods
     #  delimiter: ", "
-    #-
-    #  plugin: migration
-    #  migration: subjects
-    #  source: classes
-    #  no_stub: true
+    -
+      plugin: migration
+      migration: subjects
+      source: classes
+      no_stub: true
     #-
     #  plugin: iterator
     #  process:
