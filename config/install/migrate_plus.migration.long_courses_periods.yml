@@ -1,0 +1,80 @@
+id: long_courses_periods
+label: Long Courses Periods CSV
+migration_group: long_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - long_courses_periods_slots
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/long_courses_periods.csv
+  header_row_count: 1
+  keys:
+    - period_id
+  column_names:
+    0:
+      period_id: Period
+    1:
+      title: Title
+    2:
+      body: Body
+    3:
+      date: Date for event
+    4:
+      date_end: Date for event
+    5:
+      course_slots: Period slots
+
+process:
+  type:
+    plugin: default_value
+    default_value: vih_course_period
+  title: title
+  body: body
+  # slots to migrate
+  temp_slot:
+    -
+      plugin: migration
+      migration: long_courses_periods_slots
+      source: course_slots
+      no_stub: true
+  field_vih_cp_course_slots:
+    -
+      plugin: iterator
+      source:
+        - '@temp_slot'
+      process:
+        target_id: '0'
+        target_revision_id: '1'
+    #-
+    #  plugin: explode
+    #  source: course_periods
+    #  delimiter: ", "
+    #-
+    #  plugin: migration
+    #  migration: long_courses_periods_slots
+    #  source: course_slots
+    #  no_stub: true
+    #-
+    #  plugin: iterator
+    #  process:
+    #    target_id: '0'
+    #    target_revision_id: '1'
+  #'field_vih_cp_start_date/value':
+  #  -
+  #    plugin: format_date
+  #    from_format: 'd/m/Y'
+  #    to_format: 'Y-m-d'
+  #    source: date
+  #'field_vih_cp_end_date/value':
+  #  -
+  #    plugin: format_date
+  #    from_format: 'd/m/Y'
+  #    to_format: 'Y-m-d'
+  #    source: date_end
+destination:
+  plugin: entity:node
+  default_bundle: vih_course_period

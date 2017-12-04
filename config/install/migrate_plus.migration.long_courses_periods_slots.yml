@@ -1,0 +1,49 @@
+id: long_courses_periods_slots
+label: Long Courses Periods Slots CSV
+migration_group: long_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+#migration_dependencies:
+#  required:
+#    - subjects
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/long_courses_periods_slots.csv
+  header_row_count: 1
+  keys:
+    - slot_id
+  column_names:
+    0:
+      slot_id: Slot id
+    1:
+      title: Title
+    2:
+      classes: Classes
+    3:
+      mandatory: Mandatory
+    4:
+      travel: Travel
+process:
+  field_vih_cs_title: title
+  #field_vih_cs_travel: travel
+  #field_vih_cs_mandatory: mandatory
+  #field_vih_cs_classes:
+    #-
+    #  plugin: explode
+    #  source: course_periods
+    #  delimiter: ", "
+    #-
+    #  plugin: migration
+    #  migration: subjects
+    #  source: classes
+    #  no_stub: true
+    #-
+    #  plugin: iterator
+    #  process:
+    #    target_id: '0'
+    #    target_revision_id: '1'
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: vih_course_slot

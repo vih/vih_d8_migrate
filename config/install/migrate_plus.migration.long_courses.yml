@@ -8,6 +8,7 @@ dependencies:
 migration_dependencies:
   required:
     - long_courses_images
+    - long_courses_periods
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/long_courses.csv
@@ -37,6 +38,8 @@ source:
       materials: Materials Price
     10:
       materials: Travels Price
+    11:
+      course_periods: Course periods
 process:
   type:
     plugin: default_value
@@ -51,6 +54,21 @@ process:
   # TODO Missing travel price - should that just go with materials?
   field_vih_course_subsc_price: registration
   field_vih_course_week_price: weekly
+  field_vih_course_periods:
+    #-
+    #  plugin: explode
+    #  source: course_periods
+    #  delimiter: ", "
+    -
+      plugin: migration
+      migration: long_courses_periods
+      source: course_periods
+      no_stub: true
+    #-
+    #  plugin: iterator
+    #  process:
+    #    target_id: '0'
+    #    target_revision_id: '1'
   'field_banner/target_id':
     -
       plugin: migration
