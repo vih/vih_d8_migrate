@@ -1,0 +1,27 @@
+id: short_courses_option_groups_options
+label: Short Courses Option Groups Options CSV
+migration_group: short_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/short_courses_option_groups_options.csv
+  header_row_count: 1
+  keys:
+    - option_id
+  column_names:
+    0:
+      option_id: Option id
+    1:
+      title: Title
+    2:
+      price: Price addition
+
+process:
+  field_vih_option_title: title
+  field_vih_option_price_addition: price
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: vih_option

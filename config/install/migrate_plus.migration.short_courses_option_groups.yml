@@ -1,0 +1,50 @@
+id: short_courses_option_groups
+label: Short Courses Option Groups CSV
+migration_group: short_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  optional:
+    - short_courses_option_groups_options
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/short_courses_option_groups.csv
+  header_row_count: 1
+  keys:
+    - options_group_id
+  column_names:
+    0:
+      options_group_id: Option id
+    1:
+      title: Title
+    2:
+      options: Options
+
+process:
+  field_vih_og_title: title
+  field_vih_og_options/target_id:
+    -
+      plugin: migration_lookup
+      migration: short_course_option_groups_options
+      source: options
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '0'
+  field_vih_og_options/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: short_course_option_groups_options
+      source: options
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '1'
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: vih_option
+

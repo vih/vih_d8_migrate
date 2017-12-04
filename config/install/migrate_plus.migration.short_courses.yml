@@ -10,6 +10,7 @@ migration_dependencies:
     - short_courses_images
   optional:
     - teachers
+    - short_courses_option_groups
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/short_courses.csv
@@ -33,6 +34,8 @@ source:
       body: Body
     7:
       pictures: Pictures
+    8:
+      option_groups: Options
 
 process:
   type:
@@ -68,6 +71,26 @@ process:
       to_format: 'Y-m-d'
       source: end_date
   # TODO Missing H:i on the course
+  field_vih_sc_option_groups/target_id:
+    -
+      plugin: migration_lookup
+      migration: short_courses_option_groups
+      source: option_groups
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '0'
+  field_vih_sc_option_groups/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: short_courses_option_groups
+      source: option_groups
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '1'
   'field_banner/target_id':
     -
       plugin: migration
