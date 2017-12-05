@@ -33,6 +33,9 @@ source:
     7:
       class_packages: Class packages
 process:
+  uid:
+    plugin: default_value
+    default_value: 1
   name: name
   description: body
   field_vih_class_class_packages/target_id:

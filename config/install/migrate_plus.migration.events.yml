@@ -36,6 +36,9 @@ process:
   type:
     plugin: default_value
     default_value: event
+  uid:
+    plugin: default_value
+    default_value: 1
   field_event_price:
     plugin: default_value
     default_value: 50
@@ -58,12 +61,12 @@ process:
       source: end_date
   'field_banner/target_id':
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: events_images
       source: picture
   'field_image/target_id':
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: events_images
       source: picture
   'field_image/alt': title

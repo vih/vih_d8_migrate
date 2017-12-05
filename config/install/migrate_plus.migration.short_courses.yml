@@ -8,6 +8,8 @@ dependencies:
 migration_dependencies:
   required:
     - short_courses_images
+  optional:
+    - teachers
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/short_courses.csv
@@ -36,6 +38,16 @@ process:
   type:
     plugin: default_value
     default_value: vih_short_course
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_vih_cs_contact_person:
+    -
+      plugin: default_value
+      default_value: 25
+    -
+      plugin: migration_lookup
+      migration: teachers
   title: title
   field_vih_course_heading: title
   #field_vih_course_subheading: title

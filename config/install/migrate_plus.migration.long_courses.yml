@@ -9,6 +9,8 @@ migration_dependencies:
   required:
     - long_courses_images
     - long_courses_periods
+  optional:
+    - teachers
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/long_courses.csv
@@ -45,6 +47,16 @@ process:
     plugin: default_value
     # TODO Bundle misspelled
     default_value: vih_long_cource
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_vih_cource_contact_person:
+    -
+      plugin: default_value
+      default_value: 25
+    -
+      plugin: migration_lookup
+      migration: teachers
   title: title
   field_vih_course_heading: title
   #field_vih_course_subheading: title
@@ -60,7 +72,7 @@ process:
     #  source: course_periods
     #  delimiter: ", "
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: long_courses_periods
       source: course_periods
       no_stub: true

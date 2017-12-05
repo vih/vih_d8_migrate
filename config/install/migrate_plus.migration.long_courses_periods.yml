@@ -32,6 +32,9 @@ process:
   type:
     plugin: default_value
     default_value: vih_course_period
+  uid:
+    plugin: default_value
+    default_value: 1
   title: title
   body: body
   field_vih_cp_course_slots/target_id:
