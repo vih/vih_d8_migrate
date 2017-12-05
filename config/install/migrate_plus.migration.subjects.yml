@@ -22,7 +22,7 @@ source:
     0:
       nid: Nid
     1:
-      path: Path
+      path: Alias
     2:
       name: Name
     3:
@@ -39,17 +39,20 @@ process:
   uid:
     plugin: default_value
     default_value: 1
+  path: Alias
   name: name
+  field_heading: name
+  #	field_subheading
   description: teaser
-  field_vih_class_class_packages/target_id:
-   -
-     plugin: explode
-     delimiter: ', '
-     source: subject_packages
-   -
-      plugin: migration_lookup
-      migration: subject_packages
-      #source: class_packages
+  #field_vih_class_class_packages/target_id:
+  #  -
+  #    plugin: explode
+  #    delimiter: ', '
+  #    source: subject_packages
+  #  -
+  #    plugin: migration_lookup
+  #    migration: subject_packages
+  #    #source: class_packages
   'field_banner/target_id':
     plugin: migration_lookup
     migration: subjects_images

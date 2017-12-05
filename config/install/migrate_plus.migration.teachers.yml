@@ -40,14 +40,14 @@ process:
   field_vih_user_title: title
   mail: email
   field_e_mail: email
-  roles: roles
+  # roles: roles
   field_user_name_first: title
   field_vih_user_descr: description
   status:
     -
       plugin: default_value
       default_value: 1
-  # TODO Reintroduce when about is a proper field type
+  # TODO Reintroduce when about is a proper field type - or change to paragraph type?
 #  field_user_kvalifikationer: about
   'field_banner/target_id':
     plugin: migration

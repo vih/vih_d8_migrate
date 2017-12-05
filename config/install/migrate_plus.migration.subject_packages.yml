@@ -36,9 +36,6 @@ process:
     plugin: migration
     migration: subject_packages_images
     source: picture
-  # Now that we have the images in place, we also copy the alternate text
-  # for the images to the "alt" property of "field_image". Having "alt"
-  # would help improve accessibility and SEO.
   'field_vih_cp_image/alt': name
 destination:
   plugin: entity:taxonomy_term
