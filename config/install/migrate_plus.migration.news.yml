@@ -39,6 +39,7 @@ process:
   uid:
     plugin: default_value
     default_value: 1
+  path: path
   title: title
   body: body
   created:

@@ -38,6 +38,7 @@ process:
   type:
     plugin: default_value
     default_value: vih_short_course
+  path: path
   uid:
     plugin: default_value
     default_value: 1

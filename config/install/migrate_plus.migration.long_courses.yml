@@ -50,6 +50,7 @@ process:
   uid:
     plugin: default_value
     default_value: 1
+  path: path
   field_vih_cource_contact_person:
     -
       plugin: default_value

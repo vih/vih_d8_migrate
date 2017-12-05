@@ -35,6 +35,7 @@ process:
   type:
     plugin: default_value
     default_value: teachers
+  path: path
   name: title
   field_vih_user_title: title
   mail: email
