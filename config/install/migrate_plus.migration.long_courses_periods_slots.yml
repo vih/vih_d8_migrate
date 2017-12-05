@@ -35,12 +35,10 @@ process:
     -
       plugin: explode
       source: classes
-      delimiter: ", "
+      delimiter: "; "
     -
       plugin: migration
       migration: subjects
-      #source: classes
-      #no_stub: true
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: vih_course_slot
