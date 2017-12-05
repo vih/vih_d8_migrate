@@ -6,7 +6,7 @@ dependencies:
     module:
       - custom_migrate
 migration_dependencies:
-  optional:
+  required:
     - short_courses_option_groups_options
 source:
   plugin: csv
@@ -24,15 +24,26 @@ source:
 
 process:
   field_vih_og_title: title
-  field_vih_og_options:
+  field_vih_og_options/target_id:
     -
       plugin: migration_lookup
       migration: short_courses_option_groups_options
       source: options
       no_stub: true
-      process:
-        target_id: '0'
-        target_revision_id: '1'
+    -
+      plugin: extract
+      index:
+        - '0'
+  field_vih_og_options/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: short_courses_option_groups_options
+      source: options
+      no_stub: true
+    -
+      plugin: extract
+      index:
+        - '1'
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: vih_option_group
