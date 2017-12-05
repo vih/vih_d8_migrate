@@ -46,7 +46,7 @@ process:
      plugin: explode
      delimiter: ', '
      source: subject_packages
-    -
+   -
       plugin: migration_lookup
       migration: subject_packages
       #source: class_packages
