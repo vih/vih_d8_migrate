@@ -23,7 +23,7 @@ source:
     0:
       nid: Nid
     1:
-      path: Path
+      path_alias: Path
     2:
       name: Name
     3:

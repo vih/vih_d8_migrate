@@ -8,8 +8,8 @@ dependencies:
 migration_dependencies:
   required:
     - subjects_images
-    - subject_packages
   optional:
+    - subject_packages
     - subjects_images_paragraph
     - subjects_body_paragraph
 source:
@@ -22,7 +22,7 @@ source:
     0:
       nid: Nid
     1:
-      path: Alias
+      path_alias: Alias
     2:
       name: Name
     3:
@@ -39,16 +39,17 @@ process:
   uid:
     plugin: default_value
     default_value: 1
-  path: Alias
+  path: path_alias
   name: name
   field_heading: name
   #	field_subheading
   description: teaser
-  #field_vih_class_class_packages/target_id:
+  # TODO For some reason this breaks other migrations
+  #field_vih_class_class_packages:
   #  -
   #    plugin: explode
   #    delimiter: ', '
-  #    source: subject_packages
+  #    source: class_packages
   #  -
   #    plugin: migration_lookup
   #    migration: subject_packages
