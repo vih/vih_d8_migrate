@@ -8,6 +8,9 @@ dependencies:
 migration_dependencies:
   required:
     - news_images
+    - news_images_paragraph
+  optional:
+    - news_tags
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/news.csv
@@ -42,36 +45,45 @@ process:
   path: path
   title: title
   body: body
-  created:
-    -
-      plugin: format_date
-      from_format: 'd/m/Y - H:i'
-      to_format: 'Y-m-d H:i:s'
-      source: created
+  # TODO Fix date created
+  #created:
+  #  -
+  #    plugin: format_date
+  #    from_format: 'd/m/Y - H:i'
+  #    to_format: 'Y-m-d H:i:s'
+  #    source: created
   'field_banner/target_id':
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: news_images
       source: picture
   'field_banner/alt': title
   'field_image/target_id':
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: news_images
       source: picture
   'field_image/alt': title
-  # TODO Figure out how to do tags
-  #field_news_tags:
-  #  -
-  #    plugin: explode
-  #    delimiter: ', '
-  #    source: tags
-  #  -
-  #    plugin: entity_generate
-  #    entity_type: taxonomy_term
-  #    value_key: name
-  #    bundle: news_tags
-  #    ignore_case: true
+  para_gallery:
+      plugin: migration_lookup
+      migration: news_images_paragraph
+      source: nid
+  field_paragraphs:
+    plugin: iterator
+    source:
+      - '@para_gallery'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+  field_news_tags:
+   -
+     plugin: explode
+     delimiter: ', '
+     source: tags
+   -
+     plugin: migration_lookup
+     migration: news_tags
+     #source: tags
 destination:
   plugin: entity:node
   default_bundle: news

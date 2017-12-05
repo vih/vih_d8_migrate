@@ -9,6 +9,9 @@ migration_dependencies:
   required:
     - subjects_images
     - subject_packages
+  optional:
+    - subjects_images_paragraph
+    - subjects_body_paragraph
 source:
   plugin: csv
   path: modules/custom/custom_migrate/imports/subjects.csv
@@ -37,29 +40,41 @@ process:
     plugin: default_value
     default_value: 1
   name: name
-  description: body
+  description: teaser
   field_vih_class_class_packages/target_id:
-    #-
-    #  plugin: explode
-    #  delimiter: ', '
-    #  source: class_packages
+   -
+     plugin: explode
+     delimiter: ', '
+     source: subject_packages
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: subject_packages
+      #source: class_packages
   'field_banner/target_id':
-    plugin: migration
+    plugin: migration_lookup
     migration: subjects_images
     source: picture
   'field_vih_class_image/target_id':
-    plugin: migration
+    plugin: migration_lookup
     migration: subjects_images
     source: picture
-  # Now that we have the images in place, we also copy the alternate text
-  # for the images to the "alt" property of "field_image". Having "alt"
-  # would help improve accessibility and SEO.
   'field_vih_class_image/alt': name
-  # TODO Make a paragraph out of the pictures field
-  #  field_vih_class_image: pictures
+  para_gallery:
+      plugin: migration_lookup
+      migration: subjects_images_paragraph
+      source: name
+  para_body:
+      plugin: migration_lookup
+      migration: subjects_body_paragraph
+      source: name
+  field_paragraphs:
+    plugin: iterator
+    source:
+      - '@para_gallery'
+      - '@para_body'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 destination:
   plugin: entity:taxonomy_term
   default_bundle: vih_class

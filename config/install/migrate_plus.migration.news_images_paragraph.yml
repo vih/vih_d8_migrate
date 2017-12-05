@@ -1,0 +1,50 @@
+id: news_images_paragraph
+label: News Images Paragraph CSV
+migration_group: news
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - news_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/news.csv
+  header_row_count: 1
+  keys:
+    - nid
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      title: Title
+    3:
+      created: Date created
+    4:
+      picture: Picture
+    5:
+      pictures: Pictures
+    6:
+      body: Body
+    7:
+      tags: Tags
+process:
+  field_background_color:
+    plugin: default_value
+    default_value: 'grey'
+  'field_images':
+    plugin: iterator
+    source: picture
+    process:
+      target_id:
+        plugin: migration_lookup
+        migration: news_images
+        source: picture
+  #field_link:
+  #field_heading:
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: gallery

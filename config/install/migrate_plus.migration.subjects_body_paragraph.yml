@@ -1,0 +1,44 @@
+id: subjects_body_paragraph
+label: Subject Body CSV
+migration_group: short_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/subjects.csv
+  header_row_count: 1
+  keys:
+    - name
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      name: Name
+    3:
+      teaser: Teaser
+    4:
+      body: Body
+    5:
+      picture: Picture
+    6:
+      pictures: Pictures
+    7:
+      class_packages: Class packages
+process:
+  #field_background_image:
+  field_background_color:
+    plugin: default_value
+    default_value: 'light-grey'
+  field_body: body
+  #field_link:
+  field_heading:
+    -
+      plugin: default_value
+      default_value: "Beskrivelse"
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: article

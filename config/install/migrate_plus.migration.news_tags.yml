@@ -1,0 +1,25 @@
+id: news_tags
+label: News tags CSV
+migration_group: news
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/news_tags.csv
+  header_row_count: 1
+  keys:
+    - name
+  column_names:
+    0:
+      name: Name
+process:
+  uid:
+    plugin: default_value
+    default_value: 1
+  name: name
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: news_tags

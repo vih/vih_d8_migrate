@@ -1,0 +1,51 @@
+id: subjects_images_paragraph
+label: Subject Images CSV
+migration_group: short_courses
+dependencies:
+  enforced:
+    module:
+      - custom_migrate
+migration_dependencies:
+  required:
+    - subjects_images
+source:
+  plugin: csv
+  path: modules/custom/custom_migrate/imports/subjects.csv
+  header_row_count: 1
+  keys:
+    - name
+  column_names:
+    0:
+      nid: Nid
+    1:
+      path: Path
+    2:
+      name: Name
+    3:
+      teaser: Teaser
+    4:
+      body: Body
+    5:
+      picture: Picture
+    6:
+      pictures: Pictures
+    7:
+      class_packages: Class packages
+process:
+  #field_images:
+  field_background_color:
+    plugin: default_value
+    default_value: 'grey'
+  'field_images':
+    plugin: iterator
+    source: picture
+    process:
+      target_id:
+        plugin: migration_lookup
+        migration: subjects_images
+        source: picture
+  #field_link:
+  #field_heading:
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: gallery
