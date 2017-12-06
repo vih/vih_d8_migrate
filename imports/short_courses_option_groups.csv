@@ -1,2 +1,2 @@
-option_group_id, title, options
-1, "Tilkøb af linned", 1
+option_group_id, title, option_ids
+1, "Tilkøb af linned", "1"
