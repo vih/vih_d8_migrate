@@ -1,6 +1,8 @@
 Migration script vih.dk
 --
 
+Used for migrating into (VIH Drupal 8)[http://github.com/vih/web].
+
 Copy images from the old site to ´sites/default/files/import´.
 
 Reinstall the site using these commands.
